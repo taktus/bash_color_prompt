@@ -36,6 +36,7 @@ Example Playbook
 ----------------
 
 - name: set up color prompts
+
   hosts: all
 
   vars:
