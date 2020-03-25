@@ -62,5 +62,6 @@ Author Information
 ------------------
 
 author: Marek Krasnowski
+
 company: TAKTUS Marek Krasnowski
 
