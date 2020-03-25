@@ -1,12 +1,12 @@
 Role Name
 =========
 
-  bash_color_promot sets up colored prompt for existing linux users
+bash_color_promot sets up colored prompt for existing linux users
 
 Requirements
 ------------
 
-  Users must exist
+Users must exist
 
 Role Variables
 --------------
@@ -61,6 +61,6 @@ BSD
 Author Information
 ------------------
 
-  author: Marek Krasnowski
-  company: TAKTUS Marek Krasnowski
+author: Marek Krasnowski
+company: TAKTUS Marek Krasnowski
 
