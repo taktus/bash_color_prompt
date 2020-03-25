@@ -1,6 +1,5 @@
 ---
 # vars file for bash_color_prompt
-#
 
 users:
    - username: test_yes

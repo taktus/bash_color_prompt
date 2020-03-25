@@ -12,4 +12,3 @@
 
     - role: bash_color_prompt
       become: yes
-

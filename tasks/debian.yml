@@ -1,7 +1,5 @@
 ---
 # tasks file for bash_color_prompt
-#
-#
 
 - debug:
     msg: "user : {{ item.name }} color_prompt : {{ item.color_prompt }} color_prompt : {{ item.color }}"
