@@ -16,7 +16,7 @@ bash_color_prompt_users:- a hash with users\
 default []
 
 example:
-
+```
 bash_color_prompt_users:
   - name: test_yes
     color_prompt: yes
@@ -24,7 +24,7 @@ bash_color_prompt_users:
   - name: test_no
     color_prompt: no
     color: '32'
-
+```
 
 
 Dependencies
@@ -34,9 +34,8 @@ none
 
 Example Playbook
 ----------------
-
+```
 - name: set up color prompts
-
   hosts: all
 
   vars:
@@ -52,7 +51,7 @@ Example Playbook
 
     - role: bash_color_prompt
       become: yes
-
+```
 
 License
 -------
