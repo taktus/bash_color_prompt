@@ -1,0 +1,21 @@
+---
+# vars file for bash_color_prompt
+#
+
+users:
+   - username: test_yes
+     name: COLORPROPT ON
+   - username: test_no
+     name: COLORPROPT OFF
+
+bash_color_prompt_users:
+  - name: test_yes
+    color_prompt: yes
+    color: '33'
+  - name: test_no
+    color_prompt: no
+    color: '32'
+  
+package_list_group:
+  - name: sudo
+    state: latest

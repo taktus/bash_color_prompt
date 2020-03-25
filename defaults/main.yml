@@ -1,0 +1,5 @@
+---
+# defaults file for bash_color_prompt
+#
+
+bash_color_prompt_users: []

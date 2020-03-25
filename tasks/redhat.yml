@@ -1,0 +1,79 @@
+---
+# tasks file for bash_color_prompt
+#
+#
+
+- debug:
+    msg: "user : {{ item.name }} color_prompt : {{ item.color_prompt }} color_prompt : {{ item.color }}"
+  tags:
+    - debug
+
+- name: Get user directory
+  getent:
+    database: passwd
+    key: "{{ item.name }}"
+    split: ":"
+
+- debug:
+    msg: "{{ getent_passwd[item.name][4] }}"
+  tags:
+    - debug
+
+- set_fact:
+    bashUserHomeFolder="{{ getent_passwd[item.name][4] }}"
+
+- name: check if force_color_prompt=yes exists in .bashrc
+  lineinfile:
+    path: "{{ bashUserHomeFolder }}/.bashrc"
+    regexp: "force_color_prompt=yes"
+    state: absent
+  check_mode: yes
+  changed_when: false
+  register: lineisthere
+
+- debug:
+    msg: "FOUND"
+  when: lineisthere.found
+  tags:
+    - debug
+
+- debug:
+    msg: "NOT FOUND"
+  when: not lineisthere.found
+  tags:
+    - debug
+
+- name: Insert color_prompt snippet into redhat .bashrc
+  blockinfile:
+    path: "{{ bashUserHomeFolder }}/.bashrc"
+    block: "{{ lookup('file', './files/color_prompt.j2') }}"
+    marker: "# {mark} COLORPROMPT ANSIBLE MANAGED BLOCK"
+  when: not lineisthere.found
+
+- name: uncomment force_color_prompt=yes
+  lineinfile:
+    path: "{{ bashUserHomeFolder }}/.bashrc"
+    regexp: "^#force_color_prompt=yes"
+    line: "force_color_prompt=yes"
+    backrefs: yes
+    firstmatch: yes
+  when: ansible_os_family == "RedHat" and ( item.color_prompt is defined and item.color_prompt )
+
+- name: comment out force_color_prompt=yes
+  lineinfile:
+    path: "{{ bashUserHomeFolder }}/.bashrc"
+    regexp: "^force_color_prompt"
+    line: "#force_color_prompt=yes"
+    firstmatch: yes
+    backrefs: yes
+  when: ansible_os_family == "RedHat" and ( item.color_prompt is defined and not item.color_prompt )
+
+- name: Set default color in bash
+  lineinfile:
+    path: "{{  bashUserHomeFolder }}/.bashrc"
+    regexp: "\\sPS1='\\${debian_chroot:\\+\\(\\$debian_chroot\\)}\\\\\\[\\\\033\\[01;.*$"
+    line: "    PS1='${debian_chroot:+($debian_chroot)}\\\\[\\\\033[01;{{ item.color }}m\\]\\\\u@\\\\h\\\\[\\\\033[00m\\\\]:\\\\[\\\\033[01;34m\\\\]\\\\w\\\\[\\\\033[00m\\\\]\\\\$ '"
+    #{{ item.color }}
+    backrefs: yes
+    firstmatch: yes
+  when: ansible_os_family == "RedHat" and ( item.color_prompt is defined and item.color_prompt )

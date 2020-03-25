@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: all
+
+  vars_files:
+    - vars/main.yml
+
+  roles:
+
+    - role: unxnn.users
+      become: yes
+
+    - role: bash_color_prompt
+      become: yes
+

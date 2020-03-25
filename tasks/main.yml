@@ -1,0 +1,18 @@
+---
+# tasks file for bash_color_prompt
+#
+#
+
+- name: set users color prompt for Debian hosts
+  include_tasks: debian.yml
+  with_items: "{{ bash_color_prompt_users }}"
+  loop_control:
+    loop_var: item
+  when: ansible_os_family == "Debian"
+
+- name: set users color prompt for RedHat hosts
+  include_tasks: redhat.yml
+  with_items: "{{ bash_color_prompt_users }}"
+  loop_control:
+    loop_var: item
+  when: ansible_os_family == "RedHat"
